@@ -73,7 +73,7 @@ $(document).ready(function() {
 	//Collision
 	function collisionDetect(playerX, playerY) {
 		var collide = false;
-		playerBox = context.getImageData(playerX - 1, playerY - 1, 2, 2);
+		playerBox = context.getImageData(playerX, playerY, 1, 1);
 		// console.log(playerBox);
 		// console.log(wallColour);
 		for (i = 0; i < playerBox.data.length; i+4){
@@ -81,11 +81,13 @@ $(document).ready(function() {
 			if (checkColour == wallColour) {
 				console.log('you died!');
 				//display game over screen
+				gameOver();
 				//game over function here()
 
 			} else if (checkColour == endColour) {
 				console.log('you win!');
 				//display win screen
+				levelComplete();
 				//level complete function here()
 			}
 			break;
@@ -146,22 +148,26 @@ $(document).ready(function() {
 		//put mouse at specified start co-ords
 		//Start timer
 		//Button to next level
+		$('#start').css('visibility', 'hidden');
 	});
 
 	function gameOver() {
 		//End timer
 		//Show game over screen
-		//restart button
+		$('#gameOverScreen').css('visibility', 'visible');
+		//restart button	
 	}
 
 	function levelComplete() {
 		//End timer
 		//show level complete screen
+		$('#levelCompleteScreen').css('visibility', 'visible');
 		//display time/score
+		//change next level
 		//button to start next level
 	}
 		
-	
+	drawMaze(level1, level1Data);
 	
 
 });

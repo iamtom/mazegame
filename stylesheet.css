@@ -4,10 +4,13 @@
 
 body {
 	background-color: yellow;
+
 }
 
 .container {
-
+	margin-left: 25%;
+	margin-right: 25%;
+	margin-bottom: 0;
 }
 
 #canvas {
@@ -27,9 +30,12 @@ body {
 
 #start {
 	background-color: rgb(0, 200, 0);
+
+}
+
+#nextLevel {
+	background-color: rgb(0, 200, 0);
 	position: absolute;
-	top: 45%;
-	left: 45%;
 }
 
 /*Screens*/
@@ -39,6 +45,7 @@ body {
 	width: 1000px;
 	z-index: 5;
 	position: absolute;
+	margin: 0;
 }
 
 #levelCompleteScreen {
@@ -48,7 +55,14 @@ body {
 	z-index: 5;
 	position: absolute;
 	visibility: hidden;
+	margin: 0;
+}
 
+#levelCompleteScreen h1 {
+	color: rgb(255, 255, 0);
+	position: absolute;
+	top: 40%;
+	left: 40%;
 }
 
 #gameOverScreen {
@@ -58,6 +72,21 @@ body {
 	z-index: 5;
 	position: absolute;
 	visibility: hidden;
+	margin: 0;
+}
+
+#gameOverScreen h1 {
+	color: red;
+	position: absolute;
+	top: 40%;
+	left: 40%;
+}
+
+#info {
+	width: 1000px;
+	height: 200px;
+	background-color: rgba(255, 0, 0, 0.5);
+	margin: 0;
 }
 
 
