@@ -1,0 +1,1 @@
+Find your way through the maze. Be careful not to touch the walls or you'll lose!
