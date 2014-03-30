@@ -14,6 +14,14 @@ $(document).ready(function() {
 	var startColour;
 	var endColour;
 
+	var sfxMouseover = new Audio('sounds/mouseover.mp3');
+	var sfxDing = new Audio('sounds/ding.mp3');
+	var sfxGameover = new Audio('sounds/gameover.mp3');
+	var sfxApplause = new Audio('sounds/applause.mp3');
+	var sfxScribble = new Audio('sounds/scribble.mp3');
+	var musMusic1 = new Audio('sounds/music1.mp3');
+		musMusic1.loop = true;
+
 	//Line style
 	context.lineCap = 'round';
 	context.lineJoin = 'round';
@@ -51,17 +59,17 @@ $(document).ready(function() {
 			break;
 		}
 		if (checkColour == wallColour) {
-			console.log('you died!');
-			//display game over screen
-			timerStop();				
+			timerStop();			
 			gameOver();
-		} else if (checkColour == endColour /*&& timerOn == true*/) {
+		} else if (checkColour == endColour && timerOn == true) {
 			//display win screen and stop timer
 			timerStop();
 			levelComplete();
-		} else if (checkColour == startColour /*&& timerOn == false*/) {
+		} else if (checkColour == startColour && timerOn == false) {
 			//Start the timer
 			timerStart();
+			sfxDing.play();
+			musMusic1.play();
 		}
 	}
 
@@ -134,6 +142,9 @@ $(document).ready(function() {
 	}
 	function levelComplete() {
 		unbindMouse();
+		musMusic1.pause();
+		musMusic1.currentTime = 0;
+		sfxApplause.play();
 		$('#levelCompleteScreen').css('visibility', 'visible');
 		$('#levelSelection').css('visibility', 'visible');
 		var playerTime = (endTime.getTime() - startTime.getTime())/1000;
@@ -141,6 +152,9 @@ $(document).ready(function() {
 	}		
 	function gameOver() {
 		unbindMouse();
+		musMusic1.pause();
+		musMusic1.currentTime = 0;
+		sfxGameover.play();	
 		$('#gameOverScreen').css('visibility', 'visible');
 		$('#levelSelection').css('visibility', 'visible');
 	}
@@ -171,6 +185,11 @@ $(document).ready(function() {
 				break;
 		}		
 	});
+
+	$('.button').mouseover(function() {
+		sfxMouseover.play();
+	});
+
 
 	//Drawing with the mouse
 	$('#canvas').mouseenter(function(event) {
