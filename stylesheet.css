@@ -15,6 +15,13 @@ body {
 
 }
 
+.noSelect {
+  -webkit-user-select: none;  
+  -moz-user-select: none;    
+  -ms-user-select: none;      
+  user-select: none;
+}
+
 .container {
 	margin-left: 25%;
 	margin-right: 25%;
@@ -56,6 +63,7 @@ body {
 	margin: 0;
 	color: white;
 	padding: 100px;
+	cursor: default;
 }
 
 #levelCompleteScreen {
@@ -66,6 +74,7 @@ body {
 	position: absolute;
 	visibility: hidden;
 	margin: 0;
+	cursor: default;
 }
 
 #levelCompleteScreen h1 {
@@ -90,6 +99,7 @@ body {
 	position: absolute;
 	visibility: hidden;
 	margin: 0;
+	cursor: default;
 }
 
 #gameOverScreen h1 {

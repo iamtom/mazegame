@@ -15,31 +15,29 @@
 	<body>
 		<div class="container">
 			<!-- <div id="instructions">
-				<h1>Don't touch the sides!</h1>
 				<p>The aim of the game is simple. Get from the start point (green square) to the end point (red square).</p>
 				<p>To play, select the level you want from the selection under the game screen.</p>
 				<p>As your mouse enters the green square the timer will start! It will not stop until your mouse reaches to red square so move as quickly as you can!</p>
 				<p>But remember, DON'T TOUCH THE SIDES!</p>
 			</div> -->
-			<div id="startScreen">
-				<h1>Don't touch the sides!</h1>
+			<div id="startScreen" class="noSelect">
 				<p>The aim of the game is simple. Get from the start point (green square) to the end point (red square).</p>
 				<p>To play, select the level you want from the selection under the game screen.</p>
 				<p>As your mouse enters the green square the timer will start! It will not stop until your mouse reaches to red square so move as quickly as you can!</p>
 				<p>But remember, DON'T TOUCH THE SIDES!</p>
 			</div>
-			<div id="levelCompleteScreen">
+			<div id="levelCompleteScreen" class="noSelect">
 				<h1>Winner!</h1>
 				<h2 id="playerTime">time here</h2>
 			</div>
-			<div id="gameOverScreen">
+			<div id="gameOverScreen" class="noSelect">
 				<h1>Game Over!</h1>
 			</div>
 			<canvas id="canvas" tabindex="0">
 				<p>This app requires JavaScript. Please enable JavaScript.</p>
 			</canvas>
 			<div id="info">
-				<div id="levelSelection">
+				<div id="levelSelection" class="noSelect">
 					<div id="startLevel1" class="startLevel button">Level 1</div>
 					<div id="startLevel2" class="startLevel button">Level 2</div>
 					<div id="startLevel3" class="startLevel button">Level 3</div>

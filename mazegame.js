@@ -225,9 +225,4 @@ $(document).ready(function() {
 		
 		});
 	});
-
-
-	
-	
-
 });
