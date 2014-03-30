@@ -65,7 +65,6 @@ $(document).ready(function() {
 		}
 	}
 
-
 	//Level construction
 	function drawMaze(level, levelData) {
 		pX = 0; 
@@ -75,6 +74,7 @@ $(document).ready(function() {
 		wallColour = 'rgb(' + levelData.wall[0] + ',' + levelData.wall[1] + ',' + levelData.wall[2] + ')';
 		startColour = 'rgb(' + levelData.start[0] + ',' + levelData.start[1] + ',' + levelData.start[2] + ')';
 		endColour = 'rgb(' + levelData.end[0] + ',' + levelData.end[1] + ',' + levelData.end[2] + ')';
+		lineColour = 'rgb(' + levelData.line[0] + ',' + levelData.line[1] + ',' + levelData.line[2] + ')'
 
 		for (i = 0; i < level.length; i++) {
 			//Go through each row in the array
@@ -87,6 +87,7 @@ $(document).ready(function() {
 			pX = 0;
 			pY += oneUnit;
 		}
+		context.strokeStyle = lineColour;
 	}
 	function drawBlock(typeOf) {
 		var blockColour = 'pink';
@@ -116,20 +117,15 @@ $(document).ready(function() {
 
 	//Timer
 	function timerStart() {
-		//Start the timer
 		timerOn = true;
 		startTime = new Date();
 	}
 	function timerStop() {
-		//stop timer
-		//score = time
-		//write score to object containing player times for each level
 		timerOn = false;
 		endTime = new Date();	
 	}
 
 	function startLevel(level, levelData) {
-		//load level and appropriate level data
 		$('#startScreen').css('visibility', 'hidden');
 		$('#levelCompleteScreen').css('visibility', 'hidden');
 		$('#gameOverScreen').css('visibility', 'hidden');
@@ -137,34 +133,43 @@ $(document).ready(function() {
 		drawMaze(level, levelData);
 	}
 	function levelComplete() {
-		//End timer
-		//show level complete screen
 		unbindMouse();
 		$('#levelCompleteScreen').css('visibility', 'visible');
-		//display time/score
 		$('#levelSelection').css('visibility', 'visible');
 		var playerTime = (endTime.getTime() - startTime.getTime())/1000;
 		$('#levelCompleteScreen').html('<h1>Winner!</h1><h2>Your time: ' + playerTime + ' seconds</h2>');
 	}		
 	function gameOver() {
-		//End timer
-		//Show game over screen
 		unbindMouse();
 		$('#gameOverScreen').css('visibility', 'visible');
 		$('#levelSelection').css('visibility', 'visible');
 	}
-	
-
 
 	//Level selection buttons
-	$('#startLevel1').click(function() {
-		startLevel(map1, map1Data);
-	});
-	$('#startLevel2').click(function() {
-		startLevel(map2, map2Data);
-	});
-	$('#startLevel3').click(function() {
-		startLevel(map3, map3Data);
+	$('.startLevel').click(function() {
+		switch(this.id) {
+			case 'startLevel1':
+				startLevel(map1, map1Data);
+				break;
+			case 'startLevel2':
+				startLevel(map2, map2Data);
+				break;
+			case 'startLevel3':
+				startLevel(map3, map3Data);
+				break;
+			case 'startLevel4':
+				startLevel(map4, map4Data);
+				break;
+			case 'startLevel5':
+				startLevel(map5, map5Data);
+				break;
+			case 'startLevel6':
+				startLevel(map6, map6Data);
+				break;
+			case 'startLevel7':
+				startLevel(map7, map7Data);
+				break;
+		}		
 	});
 
 	//Drawing with the mouse

@@ -10,7 +10,7 @@
 
 body {
 	background-color: yellow;
-	padding: 0;
+	padding: 50px;
 	margin: 0;
 
 }
@@ -22,7 +22,7 @@ body {
 }
 
 #canvas {
-
+	cursor: crosshair;
 }
 
 /*Buttons*/
@@ -54,6 +54,8 @@ body {
 	z-index: 5;
 	position: absolute;
 	margin: 0;
+	color: white;
+	padding: 100px;
 }
 
 #levelCompleteScreen {
