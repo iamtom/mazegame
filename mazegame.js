@@ -13,14 +13,15 @@ $(document).ready(function() {
 	var wallColour;
 	var startColour;
 	var endColour;
+	 
 
 	var sfxMouseover = new Audio('sounds/mouseover.mp3');
 	var sfxDing = new Audio('sounds/ding.mp3');
 	var sfxGameover = new Audio('sounds/gameover.mp3');
 	var sfxApplause = new Audio('sounds/applause.mp3');
 	var sfxScribble = new Audio('sounds/scribble.mp3');
-	var musMusic1 = new Audio('sounds/music1.mp3');
-		musMusic1.loop = true;
+
+	var currentMusic;
 
 	//Line style
 	context.lineCap = 'round';
@@ -65,11 +66,14 @@ $(document).ready(function() {
 			//display win screen and stop timer
 			timerStop();
 			levelComplete();
+		} else if (checkColour == endColour && timerOn == false) {
+			alert('Nice try!');
 		} else if (checkColour == startColour && timerOn == false) {
 			//Start the timer
 			timerStart();
 			sfxDing.play();
-			musMusic1.play();
+			// musMusic1.play();
+			loopMusic(currentMusic);
 		}
 	}
 
@@ -138,12 +142,15 @@ $(document).ready(function() {
 		$('#levelCompleteScreen').css('visibility', 'hidden');
 		$('#gameOverScreen').css('visibility', 'hidden');
 		$('#levelSelection').css('visibility', 'hidden');
+		currentMusic = levelData.music;
 		drawMaze(level, levelData);
+		
 	}
 	function levelComplete() {
 		unbindMouse();
-		musMusic1.pause();
-		musMusic1.currentTime = 0;
+		// musMusic1.pause();
+		// musMusic1.currentTime = 0;
+		stopMusic(currentMusic);
 		sfxApplause.play();
 		$('#levelCompleteScreen').css('visibility', 'visible');
 		$('#levelSelection').css('visibility', 'visible');
@@ -152,11 +159,32 @@ $(document).ready(function() {
 	}		
 	function gameOver() {
 		unbindMouse();
-		musMusic1.pause();
-		musMusic1.currentTime = 0;
+		// musMusic1.pause();
+		// musMusic1.currentTime = 0;
+		stopMusic(currentMusic);
 		sfxGameover.play();	
 		$('#gameOverScreen').css('visibility', 'visible');
 		$('#levelSelection').css('visibility', 'visible');
+	}
+
+	//Music
+	function loopMusic(music) {
+		//It's not perfect but it works
+		music.currentTime = 0;
+		music.play();
+		music.loop = true;
+		//It will check at 9000ms and at that point currentTime will be 1ms over 8999
+		// musicLoop = setInterval(function() {
+		// 	if (music.currentTime >= 7.999) {
+
+		// 		music.currentTime = 0;
+
+		// 	}
+		// }, 1000)
+	}
+	function stopMusic(music) {
+		music.pause();
+		// clearInterval(musicLoop);
 	}
 
 	//Level selection buttons
@@ -182,6 +210,9 @@ $(document).ready(function() {
 				break;
 			case 'startLevel7':
 				startLevel(map7, map7Data);
+				break;
+			case 'startLevel8':
+				startLevel(map8, map8Data);
 				break;
 		}		
 	});
