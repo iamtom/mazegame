@@ -23,6 +23,10 @@ $(document).ready(function() {
 
 	var currentMusic;
 
+	var openLevels = [true, false, false, false, false, false, false, false, false, false];
+	// var openLevels = [true, true, true, true, true, true, true, true, true, true]; //Use this for testing stuff without needing to complete levels
+	var levelRef; //Reference to index of current level in the above array
+
 	//Line style
 	context.lineCap = 'round';
 	context.lineJoin = 'round';
@@ -34,6 +38,18 @@ $(document).ready(function() {
 	//If the player touches the wall they die. This stops them just rushing through and bouncing off the walls to get the best score
 
 	//HARD MODE: A black screen covers the maze. There is a circle of visibility surrounding the players mouse. This is another canvas on top of the bottom one. The circle is completely see-through
+	function levelOpenCheck() {
+		for (i = 0; i < openLevels.length; i++) {
+			if (openLevels[i] == true) {
+				var buttonId = 'startLevel' + (i+1);
+				$('#' + buttonId).css('background-color', 'rgb(0, 200, 0)');
+			} else if (openLevels[i] == false) {
+				var buttonId = 'startLevel' + (i+1);
+				$('#' + buttonId).css('background-color', 'rgb(200, 0, 0)');
+			}
+		}
+	}
+
 	//Mouse
 	function getMousePosition(canvas, event) {
 		var rect = canvas.getBoundingClientRect();
@@ -137,14 +153,18 @@ $(document).ready(function() {
 		endTime = new Date();	
 	}
 
-	function startLevel(level, levelData) {
-		$('#startScreen').css('visibility', 'hidden');
-		$('#levelCompleteScreen').css('visibility', 'hidden');
-		$('#gameOverScreen').css('visibility', 'hidden');
-		$('#levelSelection').css('visibility', 'hidden');
-		currentMusic = levelData.music;
-		drawMaze(level, levelData);
-		
+	function startLevel(level, levelData, positionInOpenLevelsArray) {
+		if (openLevels[positionInOpenLevelsArray] == true) {
+			$('#startScreen').css('visibility', 'hidden');
+			$('#levelCompleteScreen').css('visibility', 'hidden');
+			$('#gameOverScreen').css('visibility', 'hidden');
+			$('#levelSelection').css('visibility', 'hidden');
+			levelRef = positionInOpenLevelsArray + 1;			
+			currentMusic = levelData.music;
+			drawMaze(level, levelData);
+		} else if (openLevels[positionInOpenLevelsArray] == false) {
+			console.log('level inaccessible');
+		}
 	}
 	function levelComplete() {
 		unbindMouse();
@@ -156,6 +176,8 @@ $(document).ready(function() {
 		$('#levelSelection').css('visibility', 'visible');
 		var playerTime = (endTime.getTime() - startTime.getTime())/1000;
 		$('#levelCompleteScreen').html('<h1>Winner!</h1><h2>Your time: ' + playerTime + ' seconds</h2>');
+		openLevels[levelRef] = true;
+		levelOpenCheck();
 	}		
 	function gameOver() {
 		unbindMouse();
@@ -191,28 +213,34 @@ $(document).ready(function() {
 	$('.startLevel').click(function() {
 		switch(this.id) {
 			case 'startLevel1':
-				startLevel(map1, map1Data);
+				startLevel(map1, map1Data, 0);
 				break;
 			case 'startLevel2':
-				startLevel(map2, map2Data);
+				startLevel(map2, map2Data, 1);
 				break;
 			case 'startLevel3':
-				startLevel(map3, map3Data);
+				startLevel(map3, map3Data, 2);
 				break;
 			case 'startLevel4':
-				startLevel(map4, map4Data);
+				startLevel(map4, map4Data, 3);
 				break;
 			case 'startLevel5':
-				startLevel(map5, map5Data);
+				startLevel(map5, map5Data, 4);
 				break;
 			case 'startLevel6':
-				startLevel(map6, map6Data);
+				startLevel(map6, map6Data, 5);
 				break;
 			case 'startLevel7':
-				startLevel(map7, map7Data);
+				startLevel(map7, map7Data, 6);
 				break;
 			case 'startLevel8':
-				startLevel(map8, map8Data);
+				startLevel(map8, map8Data, 7);
+				break;
+			case 'startLevel9':
+				startLevel(map8, map8Data, 8);
+				break;
+			case 'startLevel10':
+				startLevel(map8, map8Data, 9);
 				break;
 		}		
 	});
@@ -256,4 +284,6 @@ $(document).ready(function() {
 		
 		});
 	});
+
+	levelOpenCheck();
 });
