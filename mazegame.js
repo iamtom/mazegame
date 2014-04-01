@@ -24,7 +24,7 @@ $(document).ready(function() {
 	var currentMusic;
 
 	var openLevels = [true, false, false, false, false, false, false, false, false, false];
-	// var openLevels = [true, true, true, true, true, true, true, true, true, true]; //Use this for testing stuff without needing to complete levels
+	var openLevels = [true, true, true, true, true, true, true, true, true, true]; //Use this for testing stuff without needing to complete levels
 	var levelRef; //Reference to index of current level in the above array
 
 	//Line style
@@ -38,10 +38,12 @@ $(document).ready(function() {
 	//If the player touches the wall they die. This stops them just rushing through and bouncing off the walls to get the best score
 
 	//HARD MODE: A black screen covers the maze. There is a circle of visibility surrounding the players mouse. This is another canvas on top of the bottom one. The circle is completely see-through
+
+	//This one just checks whether a level is open or not and colour codes the buttons accordingly
 	function levelOpenCheck() {
 		for (i = 0; i < openLevels.length; i++) {
 			if (openLevels[i] == true) {
-				var buttonId = 'startLevel' + (i+1);
+				var buttonId = 'startLevel' + (i+1); 
 				$('#' + buttonId).css('background-color', 'rgb(0, 200, 0)');
 			} else if (openLevels[i] == false) {
 				var buttonId = 'startLevel' + (i+1);
@@ -237,10 +239,10 @@ $(document).ready(function() {
 				startLevel(map8, map8Data, 7);
 				break;
 			case 'startLevel9':
-				startLevel(map8, map8Data, 8);
+				startLevel(map9, map9Data, 8);
 				break;
 			case 'startLevel10':
-				startLevel(map8, map8Data, 9);
+				startLevel(map10, map10Data, 9);
 				break;
 		}		
 	});
