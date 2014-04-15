@@ -13,25 +13,34 @@ $(document).ready(function() {
 	var wallColour;
 	var startColour;
 	var endColour;
-	 
 
-	var sfxMouseover = new Audio('sounds/mouseover.mp3');
-	var sfxDing = new Audio('sounds/ding.mp3');
-	var sfxGameover = new Audio('sounds/gameover.mp3');
-	var sfxApplause = new Audio('sounds/applause.mp3');
-	var sfxScribble = new Audio('sounds/scribble.mp3');
+	var playerName;
+
+	var sfx = {
+		mouseover: new Audio('sounds/mouseover.mp3'),
+		ding: new Audio('sounds/ding.mp3'),
+		gameover: new Audio('sounds/gameover.mp3'),
+		applause: new Audio('sounds/applause.mp3'),
+		scribble: new Audio('sounds/scribble.mp3')
+	};
 
 	var currentMusic;
 
 	var openLevels = [true, false, false, false, false, false, false, false, false, false];
-	var openLevels = [true, true, true, true, true, true, true, true, true, true]; //Use this for testing stuff without needing to complete levels
+	//Use this for testing stuff without needing to complete levels:
+	var openLevels = [true, true, true, true, true, true, true, true, true, true]; 
 	var levelRef; //Reference to index of current level in the above array
+	var currentLevel, currentLevelData, currentLevelName;
+
+	var hardMode = false;
 
 	//Line style
 	context.lineCap = 'round';
 	context.lineJoin = 'round';
 	context.lineWidth = 1;
 	context.strokeStyle = 'black';	
+
+
 
 	//Level completition will be timed. Should start from when the mouse leaves the green until it enters the red.
 
@@ -40,6 +49,15 @@ $(document).ready(function() {
 	//HARD MODE: A black screen covers the maze. There is a circle of visibility surrounding the players mouse. This is another canvas on top of the bottom one. The circle is completely see-through
 
 	//This one just checks whether a level is open or not and colour codes the buttons accordingly
+	function highScore(name, level, score) {
+		this.name = name;
+		this.level = level;
+		this.score = score;
+	}
+	//Testing creating a new highscore object
+	aaa = new highScore('Tom', 'level1', 7.5);
+	console.log(aaa);
+
 	function levelOpenCheck() {
 		for (i = 0; i < openLevels.length; i++) {
 			if (openLevels[i] == true) {
@@ -47,8 +65,22 @@ $(document).ready(function() {
 				$('#' + buttonId).css('background-color', 'rgb(0, 200, 0)');
 			} else if (openLevels[i] == false) {
 				var buttonId = 'startLevel' + (i+1);
-				$('#' + buttonId).css('background-color', 'rgb(200, 0, 0)');
+				$('#' + buttonId).css('background-color', 'rgb(100, 100, 100)');
 			}
+		}
+	}
+
+	function hardModeOverlay() {
+		//render level and then the overlay on top. Will call this each time mouse moves
+		if (hardMode === true) {
+			context.fillStyle = 'black';
+			context.fillRect(0, 0, canvas.width, canvas.height);
+
+			
+			context.arc(posX,posY,50,0,2*Math.PI);
+			context.clip();
+			drawMaze(currentLevel, currentLevelData);
+		
 		}
 	}
 
@@ -89,7 +121,7 @@ $(document).ready(function() {
 		} else if (checkColour == startColour && timerOn == false) {
 			//Start the timer
 			timerStart();
-			sfxDing.play();
+			sfx.ding.play();
 			// musMusic1.play();
 			loopMusic(currentMusic);
 		}
@@ -173,11 +205,17 @@ $(document).ready(function() {
 		// musMusic1.pause();
 		// musMusic1.currentTime = 0;
 		stopMusic(currentMusic);
-		sfxApplause.play();
+		sfx.applause.play();
 		$('#levelCompleteScreen').css('visibility', 'visible');
 		$('#levelSelection').css('visibility', 'visible');
 		var playerTime = (endTime.getTime() - startTime.getTime())/1000;
 		$('#levelCompleteScreen').html('<h1>Winner!</h1><h2>Your time: ' + playerTime + ' seconds</h2>');
+
+			//Testing making a highscore object
+			// playerName = prompt('What is your name?');
+			// testscore = new highScore(playerName, currentLevelName, playerTime);
+			// console.log(testscore);
+
 		openLevels[levelRef] = true;
 		levelOpenCheck();
 	}		
@@ -186,7 +224,7 @@ $(document).ready(function() {
 		// musMusic1.pause();
 		// musMusic1.currentTime = 0;
 		stopMusic(currentMusic);
-		sfxGameover.play();	
+		sfx.gameover.play();	
 		$('#gameOverScreen').css('visibility', 'visible');
 		$('#levelSelection').css('visibility', 'visible');
 	}
@@ -215,40 +253,70 @@ $(document).ready(function() {
 	$('.startLevel').click(function() {
 		switch(this.id) {
 			case 'startLevel1':
+				currentLevel = map1;
+				currentLevelData = map1Data;
+				currentLevelName = 'level1';
 				startLevel(map1, map1Data, 0);
 				break;
 			case 'startLevel2':
+				currentLevel = map2;
+				currentLevelData = map2Data;
+				currentLevelName = 'level2';
 				startLevel(map2, map2Data, 1);
 				break;
 			case 'startLevel3':
+				currentLevel = map3;
+				currentLevelData = map3Data;
+				currentLevelName = 'level3';
 				startLevel(map3, map3Data, 2);
 				break;
 			case 'startLevel4':
+				currentLevel = map4;
+				currentLevelData = map4Data;
+				currentLevelName = 'level4';
 				startLevel(map4, map4Data, 3);
 				break;
 			case 'startLevel5':
+				currentLevel = map5;
+				currentLevelData = map5Data;
+				currentLevelName = 'level5';
 				startLevel(map5, map5Data, 4);
 				break;
 			case 'startLevel6':
+				currentLevel = map6;
+				currentLevelData = map6Data;
+				currentLevelName = 'level6';
 				startLevel(map6, map6Data, 5);
 				break;
 			case 'startLevel7':
+				currentLevel = map7;
+				currentLevelData = map7Data;
+				currentLevelName = 'level7';
 				startLevel(map7, map7Data, 6);
 				break;
 			case 'startLevel8':
+				currentLevel = map8;
+				currentLevelData = map8Data;
+				currentLevelName = 'level8';
 				startLevel(map8, map8Data, 7);
 				break;
 			case 'startLevel9':
+				currentLevel = map9;
+				currentLevelData = map9Data;
+				currentLevelName = 'level9';
 				startLevel(map9, map9Data, 8);
 				break;
 			case 'startLevel10':
+				currentLevel = map10;
+				currentLevelData = map10Data;
+				currentLevelName = 'level10';
 				startLevel(map10, map10Data, 9);
 				break;
 		}		
 	});
 
 	$('.button').mouseover(function() {
-		sfxMouseover.play();
+		sfx.mouseover.play();
 	});
 
 
@@ -271,7 +339,7 @@ $(document).ready(function() {
 			var msg = "Mouse called at ";
 			msg += event.pageX + ", " + event.pageY;
 			console.log(msg); */
-
+			
 			collisionDetect(posX, posY);
 
 			//Draw the lines:
@@ -283,7 +351,7 @@ $(document).ready(function() {
 				logOfX = [];
 				logOfY = [];
 			}
-		
+			
 		});
 	});
 
