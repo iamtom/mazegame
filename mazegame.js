@@ -208,8 +208,10 @@ $(document).ready(function() {
 		sfx.applause.play();
 		$('#levelCompleteScreen').css('visibility', 'visible');
 		$('#levelSelection').css('visibility', 'visible');
-		var playerTime = (endTime.getTime() - startTime.getTime())/1000;
-		$('#levelCompleteScreen').html('<h1>Winner!</h1><h2>Your time: ' + playerTime + ' seconds</h2>');
+		var playerTime = (endTime.getTime() - startTime.getTime());
+		$('#playerTimeDisplay').html(playerTime/1000);
+		document.getElementById('playerTime').value = playerTime; //put player's time in a hidden input field in the score submit form so that php may get it
+		document.getElementById('levelPlayed').value = currentLevelName;
 
 			//Testing making a highscore object
 			// playerName = prompt('What is your name?');

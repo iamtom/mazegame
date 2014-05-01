@@ -82,19 +82,19 @@ h1 {
 	cursor: default;
 }
 
-#levelCompleteScreen h1 {
+#levelCompleteScreen form {
 	color: rgb(255, 255, 0);
 	position: absolute;
 	top: 40%;
 	left: 40%;
 }
 
-#levelCompleteScreen h2 {
+/*#levelCompleteScreen h2 {
 	color: rgb(255, 255, 0);
 	position: absolute;
 	top: 50%;
 	left: 40%;
-}
+}*/
 
 #gameOverScreen {
 	background-color: rgba(0, 0, 0, 0.5);
